@@ -52,12 +52,13 @@ fun Calendar.apartDays(c: Calendar): Int {
     }
 
     if (this.get(Calendar.YEAR) == c.get(Calendar.YEAR)
-        && this.get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_YEAR)) {
+        && this.get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_YEAR)
+    ) {
         return 0
     }
 
-    val apartMillseconds = this.time.time - c.time.time
-    val days = TimeUnit.MILLISECONDS.toDays(apartMillseconds);
+    val apartMilliSeconds = this.time.time - c.time.time
+    val days = TimeUnit.MILLISECONDS.toDays(apartMilliSeconds);
 
     // 默认使用 Int
     return days.toInt()

@@ -1,7 +1,10 @@
 package com.sohnyi.timeuti
 
+import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Calendar
+import java.util.Locale
+import java.util.concurrent.TimeUnit
 
 /**
  * Description：Long 的拓展
@@ -17,9 +20,14 @@ import java.util.Calendar
  */
 val Long.isToady: Boolean
     get() {
-        val c = Calendar.getInstance()
-        c.time = Date(this)
-        return c.isToday
+        val today = Date()
+        return if (this == today.time) {
+            true
+        } else {
+            val c = Calendar.getInstance()
+            c.time = today
+            c.isToday
+        }
     }
 
 /**
@@ -31,9 +39,30 @@ val Long.isToady: Boolean
  */
 val Long.apartToady: Int
     get() {
-        val c = Calendar.getInstance()
-        c.time = Date(this)
-        return c.apartToday
+        val apartMilliSeconds = this - Date().time
+        return if (apartMilliSeconds == 0L) {
+            0
+        } else {
+            TimeUnit.MILLISECONDS.toDays(apartMilliSeconds).toInt()
+        }
     }
+
+/**
+ * 计算给定的时间与当前时间相隔多少天
+ * @param time 给定的时间内
+ */
+fun Long.apartDays(time: Long): Int {
+    return if (this == time) {
+        0
+    } else {
+        val apart = this - time
+        TimeUnit.MICROSECONDS.toDays(apart).toInt()
+    }
+}
+
+fun Long.dateString(pattern: String, locale: Locale = Locale.getDefault()): String {
+    val format = SimpleDateFormat(pattern, locale)
+    return format.format(Date(this))
+}
 
 ///
