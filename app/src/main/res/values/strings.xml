@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">yi_utils</string>
+    <string name="app_name" translatable="false">yi_utils</string>
+    <string name="hi">Hi!</string>
 </resources>
